@@ -1,1 +1,2 @@
 airflow-provider-ray
+xgboost_ray

@@ -1,3 +1,4 @@
 .git
+.idea
 .env
 airflow_settings.yaml

@@ -5,7 +5,7 @@ from airflow.decorators import dag, task
 from airflow.utils.dates import days_ago
 from airflow.operators.dummy_operator import DummyOperator
 import ray
-from ray_provider.decorators.ray_task import ray_task
+from ray_provider.decorators.ray_decorators import ray_task
 import numpy as np
 import xgboost_ray as xgb
 from ray_provider.xcom.ray_backend import RayBackend
@@ -20,8 +20,9 @@ default_args = {
 
 task_args = {"ray_conn_id": "ray_cluster_connection"}
 
-
-SIMPLE = False
+# If you want to run against the entire HIGGS dataset, turn off local mode. Just a heads up, the dataset is quite
+# large and will take a long time to load if you are not running ray in a cloud instance.
+LOCAL_MODE = False
 
 DataFrame = Any
 
@@ -31,7 +32,7 @@ def xgboost_modin_breast_cancer():
     def load_dataframe() -> DataFrame:
         """Build a dataframe task."""
         print("Loading CSV.")
-        if SIMPLE:
+        if LOCAL_MODE:
             print("Loading simple")
             from sklearn import datasets
             data = datasets.load_breast_cancer(return_X_y=True)
@@ -59,8 +60,8 @@ def xgboost_modin_breast_cancer():
             logfile.write(f"{msg}\n")
             logfile.flush()
 
-        write(f"Creating data matrix: {data, SIMPLE}")
-        if SIMPLE:
+        write(f"Creating data matrix: {data, LOCAL_MODE}")
+        if LOCAL_MODE:
             from sklearn.model_selection import train_test_split
             write("Splitting data")
             data, labels = data
