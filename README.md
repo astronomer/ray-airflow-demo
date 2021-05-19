@@ -10,8 +10,7 @@ Current Release: 0.2.1
 
 ## Requirements
 
-Visit the [Ray Project page](https://Ray.io/)
-for more info on Ray.
+Visit the [Ray Project page](https://Ray.io/) for more info on Ray.
 
 > ⚠️ The server version and client version (build) of Ray MUST be the same.
 
@@ -54,8 +53,7 @@ for more info on Ray.
 
     You should now be able to open the Ray dashboard at [http://127.0.0.1:8265/](http://127.0.0.1:8265/).
 
-4. Start your Airflow environment and open the UI. If you have installed the astro CLI, you can do this
-by running `astro dev start`.
+4. Start your Airflow environment and open the UI. If you have installed the astro CLI, you can do this by running `astro dev start`.
 
 5. In the Airflow UI, add an `Airflow Pool` with the following:
 
