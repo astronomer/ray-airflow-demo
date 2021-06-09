@@ -1,2 +1,2 @@
-airflow-provider-ray
-xgboost_ray
+airflow-provider-ray==0.2.1
+xgboost-ray==0.0.5
