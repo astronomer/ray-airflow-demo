@@ -19,14 +19,6 @@ from ray_provider.xcom.ray_backend import RayBackend
 from xgboost_ray.tune import TuneReportCheckpointCallback
 
 
-# These args will get passed on to each operator
-# You can override them on a per-task basis during operator initialization
-default_args = {
-    "owner": "airflow",
-    "on_success_callback": RayBackend.on_success_callback,
-    "on_failure_callback": RayBackend.on_failure_callback,
-}
-
 task_args = {"ray_conn_id": "ray_cluster_connection"}
 
 SIMPLE = True
@@ -36,7 +28,10 @@ LOCAL_DIR = f"{ROOT_DIR}/ray_results"
 
 
 @dag(
-    default_args=default_args,
+    default_args={
+        "on_success_callback": RayBackend.on_success_callback,
+        "on_failure_callback": RayBackend.on_failure_callback,
+    },
     schedule_interval=None,
     start_date=datetime(2021, 3, 11),
     tags=["xgboost-pandas-only"],

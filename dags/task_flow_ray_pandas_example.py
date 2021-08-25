@@ -11,17 +11,11 @@ from ray_provider.decorators.ray_decorators import ray_task
 from ray_provider.xcom.ray_backend import RayBackend
 
 
-# These args will get passed on to each operator
-# You can override them on a per-task basis during operator initialization
-default_args = {
-    "owner": "airflow",
-    "on_success_callback": RayBackend.on_success_callback,
-    "on_failure_callback": RayBackend.on_failure_callback,
-}
-
-
 @dag(
-    default_args=default_args,
+    default_args={
+        "on_success_callback": RayBackend.on_success_callback,
+        "on_failure_callback": RayBackend.on_failure_callback,
+    },
     schedule_interval=None,
     start_date=datetime(2021, 3, 11),
     tags=["finished-pandas-example"],

@@ -14,14 +14,6 @@ from ray_provider.xcom.ray_backend import RayBackend
 from typing import Any
 
 
-# These args will get passed on to each operator
-# You can override them on a per-task basis during operator initialization
-default_args = {
-    "owner": "airflow",
-    "on_success_callback": RayBackend.on_success_callback,
-    "on_failure_callback": RayBackend.on_failure_callback,
-}
-
 task_args = {"ray_conn_id": "ray_cluster_connection"}
 
 # If you want to run against the entire HIGGS dataset, turn off local mode. Just a heads up, the dataset is quite
@@ -31,7 +23,10 @@ LOCAL_MODE = False
 DataFrame = Any
 
 @dag(
-    default_args=default_args,
+    default_args={
+        "on_success_callback": RayBackend.on_success_callback,
+        "on_failure_callback": RayBackend.on_failure_callback,
+    },
     schedule_interval=None,
     start_date=datetime(2021, 3, 11),
     tags=["xgboost-modin-only"],
